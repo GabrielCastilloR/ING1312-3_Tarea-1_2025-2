@@ -23,7 +23,20 @@
 import time
 import random, sys # Importa las librerias adicionales random y sys
 
-def getValidInput(prompt, dtype='str'): # Obtiene un input válido dependiendo del tipo de dato y el valor del mismo.
+def getValidInput(prompt, dtype='str'):
+	"""<func> getValidInput(prompt, dtype='str') : Obtiene un input válido dependiendo del tipo de dato y el valor del mismo.
+
+	Args:
+		prompt (str): Texto que se mostrará en la consola para pedir un input
+		dtype (str, optional): Tipo de dato deseado. Por defecto es 'str'.
+
+	Raises:
+		ValueError: Valor inesperado
+		TypeError: Tipo de dato inesperado
+
+	Returns:
+		__dtype__: Devuelve el input del usuario en el tipo de dato deseado y con las restricciones de valor deseadas
+	""" 
 	# Se usa un ciclo while para repetir la interacción hasta que sea válida
 	isValid = False
 	while not isValid:
@@ -56,8 +69,17 @@ def getValidInput(prompt, dtype='str'): # Obtiene un input válido dependiendo d
 		except ValueError:
 			print('ERROR: El valor ingresado es inválido! Porfavor ingrese un numero entero positivo.')
 
-class Stair: # Define el objeto Stair con args: stepsTotal. y **kwargs: waterLevel=0, cats=None. Más detalles en lineas 56->66
-	def __init__(self, stepsTotal, waterLevel=0, cats=None): # **kwarg cats debe contener una lista de objetos Cat, por defecto es None
+class Stair:
+	"""<class> Stair : Objeto que define la escalera y maneja la simulación
+	"""    
+	def __init__(self, stepsTotal, waterLevel=0, cats=None):
+		"""<method> __init__(self, stepsTotal, waterLevel=0, cats=None): Inicializa una instancia del objeto Stair
+
+		Args:
+			stepsTotal (int): Cantidad de escalones total
+			waterLevel (int, optional): Posicion Inicial de la marea. Por defecto es 0.
+			cats (list(typeof(<class Cat>)), optional): Lista que contiene instancias del objeto Cat.Por defecto es None.
+		"""     
 		self.N = stepsTotal #Cantidad de escalones
 		self.dTime = 0 #Tiempo Inicial en segundos, siempre será 0
 		self.waterPos = waterLevel #Posición de la marea, por defecto es 0
@@ -69,7 +91,12 @@ class Stair: # Define el objeto Stair con args: stepsTotal. y **kwargs: waterLev
 			self.cats = []
 			self.isCatsVoid = True
 	
-	def printStairState(self, isFinal=False): # Imprime el estado actual de la simulación
+	def printStairState(self, isFinal=False):
+		"""<method> printStairState(self, isFinal=False): Imprime el estado actual de la simulación
+
+		Args:
+			isFinal (bool, optional): Define si se mostrará el resumen final. Por defecto es False.
+		"""     
 		#Convierte self.dTime a formato hh:mm:ss
 		mins = int(self.dTime//60)
 		secs = int(self.dTime - 60*mins)
@@ -88,7 +115,7 @@ class Stair: # Define el objeto Stair con args: stepsTotal. y **kwargs: waterLev
 				case 'safe':
 					catGroups[2].append(cat)
 
-		# Añade formato condicional al texto en la línea 96
+		# Añade formato condicional al texto en la línea 125
 		ver = 'Actual'
 		if isFinal:
 			ver = 'Final'
@@ -111,7 +138,16 @@ class Stair: # Define el objeto Stair con args: stepsTotal. y **kwargs: waterLev
 				print('	-> ID: {}'.format(cat.name))
 		print('+'+'-'*100+'+')
 		
-	def raiseWater(self, n, dt): # Mueve la marea, toma los argumentos n y dt que representan la distancia recorrida y el intervalo de tiempo transcurrido respectivamente. Devuelve un bool
+	def raiseWater(self, n, dt):
+		"""<method> raiseWater(self, n, dt) : Mueve la marea n escalones en un intervalo de tiempo dt.
+
+		Args:
+			n (int): Cantidad de escalones que avanza la marea.
+			dt (int, float): Intervalo de tiempo en segundos. https://docs.python.org/3/library/time.html#time.sleep para más información
+
+		Returns:
+			bool: Determina si la simulación termina.
+		"""     
 		time.sleep(dt) #Se hace la espera correspondiente
 		# Se actualizan las propiedades correspondientes
 		self.dTime += dt
@@ -156,7 +192,12 @@ class Stair: # Define el objeto Stair con args: stepsTotal. y **kwargs: waterLev
 					self.printStairState()
 					return True # Devuelve True para continuar la simulación
 	
-	def updateCats(self): # Actualiza el estado y posiciones de los gatos según corresponda
+	def updateCats(self):
+		"""<method> updateCats(self) : Actualiza la posición y estado de los elementos de self.cats
+
+		Raises:
+			exit(0) : Falla critica, dado que self.cats es una lista vacía.
+		"""     
 		# Declaración de variables por conveniencia
 		sunkGate = self.waterPos # Posición actual de la marea
 		escapeGate = self.N # Umbral de escape
@@ -177,7 +218,12 @@ class Stair: # Define el objeto Stair con args: stepsTotal. y **kwargs: waterLev
 					cat.setPosition(self.N + 1) # Fija la posición del gato para evitar valores excesivamente altos
 					print('Felicitaciones! {} ha logrado escapar'.format(cat.name))
 
-	def CatCount(self): # Devuelve una lista de contadores según status, de la forma [activeCount, sunkCount, safeCount]
+	def CatCount(self):
+		"""<method> CatCount(self) : 
+
+		Returns:
+			List: Lista que contiene los conteos(int) por estado de los elementos de self.cats. Es de la forma [int, int, int]  
+		"""     
 		activeCount = 0
 		sunkCount = 0
 		safeCount = 0
@@ -191,7 +237,19 @@ class Stair: # Define el objeto Stair con args: stepsTotal. y **kwargs: waterLev
 					safeCount += 1
 		return [activeCount, sunkCount, safeCount]
 
-	def update(self, nCats=1, nWater=1, dt=10, isFair=True, isRandomized=False): # Actualiza la simulación
+	def update(self, nCats=1, nWater=1, dt=10, isFair=True, isRandomized=False):
+		"""<method> update(self, nCats=1, nWater=1, dt=10, isFair=True, isRandomized=False) : Avanza la simulación.
+
+		Args:
+			nCats (int, optional): Cantidad de escalones que se mueve cada gato. Por defecto es 1.
+			nWater (int, optional): Cantidad de escalones que se mueve la marea. Por defecto es 1.
+			dt (int, optional): Intervalo de tiempo en segundos. Por defecto es 10.
+			isFair (bool, optional): Determina si la marea se mueve la misma cantidad de escalones que los gatos. Por defecto es True.
+			isRandomized (bool, optional): Determina si el movimiento de los gatos y la marea es aleatorio. Por defecto es False.
+
+		Returns:
+			bool: Llama al metodo self.raiseWater y repite su respuesta.
+		"""     
 		# Verifica si está usando la configuración aleatoria
 		if isRandomized:
 			# Verifica si está usando la configuración de movimiento justo
@@ -221,17 +279,42 @@ class Stair: # Define el objeto Stair con args: stepsTotal. y **kwargs: waterLev
 				pass
 		return self.raiseWater(nWater, dt) #Devuelve bool
 
-class Cat: # Define el objeto Cat con arg: name, pos y **kwargs: status='active'
-	def __init__(self, name, pos, status='active'): # Inicializa la instancia del objeto
+class Cat: 
+	"""<class> Cat : Objeto que representa a un gato.
+
+		Métodos:
+			- __init__
+			- setStatus
+			- setPosition
+	"""
+	def __init__(self, name, pos, status='active'):
+		"""<method> __init__(self, name, pos, status='active') : Inicializa una instancia del objeto Cat
+
+		Args:
+			name (string): Nombre del gato
+			pos (int): Posición en la escalera del gato.
+			status (str, optional): Estado del gato. Puede ser ('active', 'sunk', 'safe'). Por defecto es 'active'.
+		"""     
 		self.name, self.pos, self.status = name, pos, status
 	
-	def setStatus(self, new): # Fija un nuevo valor de status
+	def setStatus(self, new):
+		"""<method> setStatus(self, new) : Cambia el valor de self.status
+
+		Args:
+			new (string): Nuevo estado del gato. Puede ser ('active', 'sunk', 'safe')
+		"""     
 		self.status = new
-	def setPosition(self, new): # Fija un nuevo valor de pos
+	def setPosition(self, new):
+		"""<method> setPosition(self, new) : Cambia el valor de self.pos
+
+		Args:
+			new (int): Nueva posición del gato en la escalera. Debe ser un entero positivo no nulo.
+		"""     
 		self.pos = new
 
-def __main__(): # Función de ejecución primaria
-
+def __main__(): 
+	"""<func> __main__() : Función de ejecución primaria. Al llamarla se ejecuta el módulo.
+	"""
 	# Mensaje de bienvenida
 	print('+'+'='*100+'+\n'+'Bienvenido! Esto es un simulador extra para el problema 2 de la tarea 1.\n'+'+'+'='*100+'+')
 	print('Comenzando configuracion...')
