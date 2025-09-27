@@ -1,28 +1,39 @@
 # -*- coding: utf-8 -*-
-    """Problema 2 Extra.
-    
-    Autor:			Gabriel Andres Castillo Rosales
-    RUT:			19.679.401-8
-    Docente:		Matias Pastene Orellana
-    Curso:			ING1312
-    Seccion:		3
-    Descripcion: 	Módulo extra para P2 de tarea 1. 
-                    Simulación de la escalera siendo inundada y el escape de los gatos
-                    usando POO, instanciación, iterables y algunas librerias adicionales.
-                    Se ignora la condición "sólo puede haber un gato por escalón" para simplificar un poco los condicionales,
-                    pero dado el código usado, esta debería cumplirse de todas formas para la configuración básica de la simulación. No está testeado para las configs isRandomized=True, isFair=True
-                    Se hace entrega del módulo listo para ejecutar desde el depurador.
-    Notas Adicionales:
-        - Se usa la convención camelCase para nombrar las variables y funciones.
-        - Se usa la convención PascalCase para nombrar objetos.
-        - Se usa declaración de variables por compresión cuando se considera conveniente.
-        - El código tiene una mezcla de inglés y español, ya que aprendí a usar Python de forma autodidacta. (Youtube, StackExchange, PythonDocs y mucho Google)
-        - Las líneas marcadas con "#Sanity Check" cumplen la función de prevenir errores fortuitos.
-        - Todas las funciones y objetos tienen comentarios con sus respectivas descripciones.
-        - Algunas líneas tienen comentarios con información adicional relevante.
-    """
+__docformat__ = "google"
+"""
+.. include:: ../README.md
+"""
+
+"""
+<section> #Problema 2 Extra.
+
+Autor:			Gabriel Andres Castillo Rosales
+RUT:			19.679.401-8
+Docente:		Matias Pastene Orellana
+Curso:			ING1312
+Seccion:		3
+Descripcion: 	Módulo extra para P2 de tarea 1. 
+				Simulación de la escalera siendo inundada y el escape de los gatos
+				usando POO, instanciación, iterables y algunas librerias adicionales.
+				Se ignora la condición "sólo puede haber un gato por escalón" para simplificar un poco los condicionales,
+				pero dado el código usado, esta debería cumplirse de todas formas para la configuración básica de la simulación. No está testeado para las configs isRandomized=True, isFair=True
+				Se hace entrega del módulo listo para ejecutar desde el depurador.
+Notas Adicionales:
+	- Se usa la convención camelCase para nombrar las variables y funciones.
+	- Se usa la convención PascalCase para nombrar objetos.
+	- Se usa declaración de variables por compresión cuando se considera conveniente.
+	- El código tiene una mezcla de inglés y español, ya que aprendí a usar Python de forma autodidacta. (Youtube, StackExchange, PythonDocs y mucho Google)
+	- Las líneas marcadas con "#Sanity Check" cumplen la función de prevenir errores fortuitos.
+	- Todas las funciones y objetos tienen comentarios con sus respectivas descripciones.
+	- Algunas líneas tienen comentarios con información adicional relevante.
+ Dependencias:
+	- time
+	- random
+	- sys
+"""
 import time
 import random, sys # Importa las librerias adicionales random y sys
+
 
 def getValidInput(prompt, dtype='str'):
 	"""<func> getValidInput(prompt, dtype='str') : Obtiene un input válido dependiendo del tipo de dato y el valor del mismo.
@@ -71,7 +82,15 @@ def getValidInput(prompt, dtype='str'):
 			print('ERROR: El valor ingresado es inválido! Porfavor ingrese un numero entero positivo.')
 
 class Stair:
-	"""<class> Stair : Objeto que define la escalera y maneja la simulación
+	"""<class> Stair : Objeto que define la escalera y maneja la ejecución de la simulación. Solo definir 1 instancia
+
+		Métodos:
+			- __init__
+			- printStairState
+			- raiseWater
+			- updateCats
+			- CatCount
+			- update
 	"""    
 	def __init__(self, stepsTotal, waterLevel=0, cats=None):
 		"""<method> __init__(self, stepsTotal, waterLevel=0, cats=None): Inicializa una instancia del objeto Stair
@@ -93,7 +112,7 @@ class Stair:
 			self.isCatsVoid = True
 	
 	def printStairState(self, isFinal=False):
-		"""<method> printStairState(self, isFinal=False): Imprime el estado actual de la simulación
+		"""<method> Uso: self.printStairState(**isFinal=False): Imprime el estado actual de la simulación
 
 		Args:
 			isFinal (bool, optional): Define si se mostrará el resumen final. Por defecto es False.
@@ -140,7 +159,7 @@ class Stair:
 		print('+'+'-'*100+'+')
 		
 	def raiseWater(self, n, dt):
-		"""<method> raiseWater(self, n, dt) : Mueve la marea n escalones en un intervalo de tiempo dt.
+		"""<method> Uso: self.raiseWater(n, dt) : Mueve la marea n escalones en un intervalo de tiempo dt.
 
 		Args:
 			n (int): Cantidad de escalones que avanza la marea.
@@ -194,7 +213,7 @@ class Stair:
 					return True # Devuelve True para continuar la simulación
 	
 	def updateCats(self):
-		"""<method> updateCats(self) : Actualiza la posición y estado de los elementos de self.cats
+		"""<method> Uso: self.updateCats() : Actualiza la posición y estado de los elementos de self.cats
 
 		Raises:
 			exit(0) : Falla critica, dado que self.cats es una lista vacía.
@@ -220,7 +239,7 @@ class Stair:
 					print('Felicitaciones! {} ha logrado escapar'.format(cat.name))
 
 	def CatCount(self):
-		"""<method> CatCount(self) : 
+		"""<method> Uso: self.CatCount() : Realiza un conteo por estado de los elementos en self.cats
 
 		Returns:
 			List: Lista que contiene los conteos(int) por estado de los elementos de self.cats. Es de la forma [int, int, int]  
@@ -239,7 +258,7 @@ class Stair:
 		return [activeCount, sunkCount, safeCount]
 
 	def update(self, nCats=1, nWater=1, dt=10, isFair=True, isRandomized=False):
-		"""<method> update(self, nCats=1, nWater=1, dt=10, isFair=True, isRandomized=False) : Avanza la simulación.
+		"""<method> Uso: self.update(nCats=1, nWater=1, dt=10, isFair=True, isRandomized=False) : Avanza la simulación.
 
 		Args:
 			nCats (int, optional): Cantidad de escalones que se mueve cada gato. Por defecto es 1.
@@ -289,7 +308,7 @@ class Cat:
 			- setPosition
 	"""
 	def __init__(self, name, pos, status='active'):
-		"""<method> __init__(self, name, pos, status='active') : Inicializa una instancia del objeto Cat
+		"""<method> Uso: Cat(name, pos, status='active') : Inicializa una instancia del objeto Cat.
 
 		Args:
 			name (string): Nombre del gato
@@ -299,14 +318,14 @@ class Cat:
 		self.name, self.pos, self.status = name, pos, status
 	
 	def setStatus(self, new):
-		"""<method> setStatus(self, new) : Cambia el valor de self.status
+		"""<method> Uso: self.setStatus(new) : Cambia el valor de Cat.status
 
 		Args:
 			new (string): Nuevo estado del gato. Puede ser ('active', 'sunk', 'safe')
 		"""     
 		self.status = new
 	def setPosition(self, new):
-		"""<method> setPosition(self, new) : Cambia el valor de self.pos
+		"""<method> Uso: self.setPosition(new) : Cambia el valor de Cat.pos
 
 		Args:
 			new (int): Nueva posición del gato en la escalera. Debe ser un entero positivo no nulo.
@@ -375,7 +394,7 @@ def __main__():
 	catMove, waterMove, dt = 1, 1, 10
 
 	# Comienza la configuración de la simulación
-	isRandomized, isFair = None, None20
+	isRandomized, isFair = None, None
 	isCustomConditions = getValidInput('¿Desea usar configuraciones avanzadas para el tiempo y movimientos de la marea y gatitos?(y/n) ', 'bool')
 	print('+'+'-'*100+'+')
 	if isCustomConditions: # Se usan condiciones personalizadas
@@ -432,5 +451,3 @@ def __main__():
 	isRunning = True
 	while isRunning:
 		isRunning = stair.update(nCats=1, nWater=1, dt=10, isFair=isFair, isRandomized=isRandomized) #stair.update devuelve un bool que será False si y sólo si se cumplen las condiciones necesarioas para finalizar la simulación
-
-__main__() # Ejecuta la función primaria

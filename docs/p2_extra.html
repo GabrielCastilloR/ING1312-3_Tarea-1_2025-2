@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.6">
+<title>p2_extra API documentation</title>
+<meta name="description" content="">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>p2_extra</code></h1>
+</header>
+<section id="section-intro">
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="p2_extra.getValidInput"><code class="name flex">
+<span>def <span class="ident">getValidInput</span></span>(<span>prompt, dtype='str')</span>
+</code></dt>
+<dd>
+<div class="desc"><p><func> getValidInput(prompt, dtype='str') : Obtiene un input válido dependiendo del tipo de dato y el valor del mismo.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>prompt</code></strong> :&ensp;<code>str</code></dt>
+<dd>Texto que se mostrará en la consola para pedir un input</dd>
+<dt><strong><code>dtype</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Tipo de dato deseado. Por defecto es 'str'.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ValueError</code></dt>
+<dd>Valor inesperado</dd>
+<dt><code>TypeError</code></dt>
+<dd>Tipo de dato inesperado</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>__dtype__</code></dt>
+<dd>Devuelve el input del usuario en el tipo de dato deseado y con las restricciones de valor deseadas</dd>
+</dl></div>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="p2_extra.Cat"><code class="flex name class">
+<span>class <span class="ident">Cat</span></span>
+<span>(</span><span>name, pos, status='active')</span>
+</code></dt>
+<dd>
+<div class="desc"><p><class> Cat : Objeto que representa a un gato.</p>
+<h2 id="metodos">Métodos</h2>
+<ul>
+<li><strong>init</strong></li>
+<li>setStatus</li>
+<li>setPosition</li>
+</ul>
+<p><method> <strong>init</strong>(self, name, pos, status='active') : Inicializa una instancia del objeto Cat</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>name</code></strong> :&ensp;<code>string</code></dt>
+<dd>Nombre del gato</dd>
+<dt><strong><code>pos</code></strong> :&ensp;<code>int</code></dt>
+<dd>Posición en la escalera del gato.</dd>
+<dt><strong><code>status</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Estado del gato. Puede ser ('active', 'sunk', 'safe'). Por defecto es 'active'.</dd>
+</dl></div>
+<h3>Methods</h3>
+<dl>
+<dt id="p2_extra.Cat.setPosition"><code class="name flex">
+<span>def <span class="ident">setPosition</span></span>(<span>self, new)</span>
+</code></dt>
+<dd>
+<div class="desc"><p><method> setPosition(self, new) : Cambia el valor de self.pos</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>new</code></strong> :&ensp;<code>int</code></dt>
+<dd>Nueva posición del gato en la escalera. Debe ser un entero positivo no nulo.</dd>
+</dl></div>
+</dd>
+<dt id="p2_extra.Cat.setStatus"><code class="name flex">
+<span>def <span class="ident">setStatus</span></span>(<span>self, new)</span>
+</code></dt>
+<dd>
+<div class="desc"><p><method> setStatus(self, new) : Cambia el valor de self.status</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>new</code></strong> :&ensp;<code>string</code></dt>
+<dd>Nuevo estado del gato. Puede ser ('active', 'sunk', 'safe')</dd>
+</dl></div>
+</dd>
+</dl>
+</dd>
+<dt id="p2_extra.Stair"><code class="flex name class">
+<span>class <span class="ident">Stair</span></span>
+<span>(</span><span>stepsTotal, waterLevel=0, cats=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p><class> Stair : Objeto que define la escalera y maneja la simulación</p>
+<p><method> <strong>init</strong>(self, stepsTotal, waterLevel=0, cats=None): Inicializa una instancia del objeto Stair</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>stepsTotal</code></strong> :&ensp;<code>int</code></dt>
+<dd>Cantidad de escalones total</dd>
+<dt><strong><code>waterLevel</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>Posicion Inicial de la marea. Por defecto es 0.</dd>
+</dl>
+<p>cats (list(typeof(<class Cat>)), optional): Lista que contiene instancias del objeto Cat.Por defecto es None.</p></div>
+<h3>Methods</h3>
+<dl>
+<dt id="p2_extra.Stair.CatCount"><code class="name flex">
+<span>def <span class="ident">CatCount</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p><method> CatCount(self) : </p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>List</code></dt>
+<dd>Lista que contiene los conteos(int) por estado de los elementos de self.cats. Es de la forma [int, int, int]</dd>
+</dl></div>
+</dd>
+<dt id="p2_extra.Stair.printStairState"><code class="name flex">
+<span>def <span class="ident">printStairState</span></span>(<span>self, isFinal=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p><method> printStairState(self, isFinal=False): Imprime el estado actual de la simulación</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>isFinal</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>Define si se mostrará el resumen final. Por defecto es False.</dd>
+</dl></div>
+</dd>
+<dt id="p2_extra.Stair.raiseWater"><code class="name flex">
+<span>def <span class="ident">raiseWater</span></span>(<span>self, n, dt)</span>
+</code></dt>
+<dd>
+<div class="desc"><p><method> raiseWater(self, n, dt) : Mueve la marea n escalones en un intervalo de tiempo dt.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>n</code></strong> :&ensp;<code>int</code></dt>
+<dd>Cantidad de escalones que avanza la marea.</dd>
+<dt><strong><code>dt</code></strong> :&ensp;<code>int, float</code></dt>
+<dd>Intervalo de tiempo en segundos. <a href="https://docs.python.org/3/library/time.html#time.sleep">https://docs.python.org/3/library/time.html#time.sleep</a> para más información</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>bool</code></dt>
+<dd>Determina si la simulación termina.</dd>
+</dl></div>
+</dd>
+<dt id="p2_extra.Stair.update"><code class="name flex">
+<span>def <span class="ident">update</span></span>(<span>self, nCats=1, nWater=1, dt=10, isFair=True, isRandomized=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p><method> update(self, nCats=1, nWater=1, dt=10, isFair=True, isRandomized=False) : Avanza la simulación.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>nCats</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>Cantidad de escalones que se mueve cada gato. Por defecto es 1.</dd>
+<dt><strong><code>nWater</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>Cantidad de escalones que se mueve la marea. Por defecto es 1.</dd>
+<dt><strong><code>dt</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>Intervalo de tiempo en segundos. Por defecto es 10.</dd>
+<dt><strong><code>isFair</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>Determina si la marea se mueve la misma cantidad de escalones que los gatos. Por defecto es True.</dd>
+<dt><strong><code>isRandomized</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>Determina si el movimiento de los gatos y la marea es aleatorio. Por defecto es False.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>bool</code></dt>
+<dd>Llama al metodo self.raiseWater y repite su respuesta.</dd>
+</dl></div>
+</dd>
+<dt id="p2_extra.Stair.updateCats"><code class="name flex">
+<span>def <span class="ident">updateCats</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p><method> updateCats(self) : Actualiza la posición y estado de los elementos de self.cats</p>
+<h2 id="raises">Raises</h2>
+<p>exit(0) : Falla critica, dado que self.cats es una lista vacía.</p></div>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="p2_extra.getValidInput" href="#p2_extra.getValidInput">getValidInput</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="p2_extra.Cat" href="#p2_extra.Cat">Cat</a></code></h4>
+<ul class="">
+<li><code><a title="p2_extra.Cat.setPosition" href="#p2_extra.Cat.setPosition">setPosition</a></code></li>
+<li><code><a title="p2_extra.Cat.setStatus" href="#p2_extra.Cat.setStatus">setStatus</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="p2_extra.Stair" href="#p2_extra.Stair">Stair</a></code></h4>
+<ul class="">
+<li><code><a title="p2_extra.Stair.CatCount" href="#p2_extra.Stair.CatCount">CatCount</a></code></li>
+<li><code><a title="p2_extra.Stair.printStairState" href="#p2_extra.Stair.printStairState">printStairState</a></code></li>
+<li><code><a title="p2_extra.Stair.raiseWater" href="#p2_extra.Stair.raiseWater">raiseWater</a></code></li>
+<li><code><a title="p2_extra.Stair.update" href="#p2_extra.Stair.update">update</a></code></li>
+<li><code><a title="p2_extra.Stair.updateCats" href="#p2_extra.Stair.updateCats">updateCats</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.6</a>.</p>
+</footer>
+</body>
+</html>
