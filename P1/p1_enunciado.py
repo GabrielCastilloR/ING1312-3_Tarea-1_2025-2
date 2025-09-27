@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-    """_summary_
-    Enunciado P1
+    """
+    Problema 1.
+    
     Docente:		Matias Pastene Orellana
     Curso:			ING1312
     Seccion:		3

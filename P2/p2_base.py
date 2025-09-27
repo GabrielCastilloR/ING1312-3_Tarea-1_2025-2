@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-    """_summary_
+    """Problema 2.
+    
     Autor:			Gabriel Andres Castillo Rosales
     RUT:			19.679.401-8
     Docente:		Matias Pastene Orellana
