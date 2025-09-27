@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 __docformat__ = "google" #Da formato de los docstrings a pdoc3
-    """Problema 2.
+"""Problema 2.
     
     Autor:			Gabriel Andres Castillo Rosales
     RUT:			19.679.401-8

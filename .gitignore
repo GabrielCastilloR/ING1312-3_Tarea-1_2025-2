@@ -6,6 +6,13 @@ __pycache__/
 # C extensions
 *.so
 
+# Visual Studio Code
+.vscode/
+.vscode-test/
+.vscode-server/
+.vscode-remote/
+.history/
+
 # Distribution / packaging
 .Python
 build/
