@@ -3,9 +3,8 @@ __docformat__ = "google"
 """
 .. include:: ../README.md
 """
-
-"""
-<section> #Problema 2 Extra.
+"""__summary__
+Problema 2 Extra.
 
 Autor:			Gabriel Andres Castillo Rosales
 RUT:			19.679.401-8
