@@ -6,7 +6,8 @@
     Curso:			ING1312
     Seccion:		3
     Descripcion:    Código presentado en el enunciado del problema 1 de la tarea 1.
-
+"""
+# P 1.1: Variables en memoria
 A = 10
 B = 20
 C = "Hola"
@@ -15,8 +16,8 @@ B = A
 Nombre = input("Ingresa tu nomre: ")
 Saludo = C + " " + Nombre + "! Cómo estás?"
 
-"""
-#P 1.2: Intercambio de variables
+
+# P 1.2: Intercambio de variables
 C = "Hola"
 D = 3.1415
 Temp = None
