@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-    """
+"""
     Problema 1.
     
     Docente:		Matias Pastene Orellana
@@ -36,4 +36,5 @@ print("Posterior al intercambio...")
 print("Valor C: ", C)
 print("Valor D: ", D)
 print("Valor Temp: ", Temp)
+
 print("-"*30)
