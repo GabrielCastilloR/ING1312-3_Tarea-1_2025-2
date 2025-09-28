@@ -45,16 +45,69 @@ el.replaceWith(d);
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="p2_extra.getValidInput"><code class="name flex">
-<span>def <span class="ident">getValidInput</span></span>(<span>prompt, dtype='str')</span>
+<span>def <span class="ident">getValidInput</span></span>(<span>prompt, dtype='str', gate=0)</span>
 </code></dt>
 <dd>
-<div class="desc"><p><func> getValidInput(prompt, dtype='str') : Obtiene un input válido dependiendo del tipo de dato y el valor del mismo.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getValidInput(prompt, dtype=&#39;str&#39;, gate=0):
+        &#34;&#34;&#34;&lt;func&gt; getValidInput(prompt, dtype) : Obtiene un input válido dependiendo del tipo de dato y el valor del mismo.
+
+        Args:
+                prompt (str): Texto que se mostrará en la consola para pedir un input
+                dtype (str, optional): Tipo de dato deseado. Por defecto es &#39;str&#39;.
+                gate (int, optional): Define un umbral inferior para los valores númericos.
+
+        Raises:
+                ValueError: Valor inesperado
+                TypeError: Tipo de dato inesperado
+
+        Returns:
+                __dtype__: Devuelve el input del usuario en el tipo de dato deseado y con las restricciones de valor deseadas
+        &#34;&#34;&#34; 
+        # Se usa un ciclo while para repetir la interacción hasta que sea válida
+        isValid = False
+        while not isValid:
+                # Se usa el método try-except para el manejo de excepciones
+                try:
+                        match dtype:
+                                case &#39;str&#39;: # Condiciones para un string válido
+                                        value = str(input(prompt))
+                                        isValid = True
+                                        return value
+                                case &#39;int&#39;: # Condiciones para un int válido. Para los fines de este módulo siempre deben ser positivos y mayores que cero.
+                                        value = int(input(prompt))
+                                        if value &lt;= gate: # Fuerza la excepción ValueError, ya que el dato ingresado es &lt;= 0
+                                                raise ValueError
+                                        else:
+                                                isValid = True
+                                                return value
+                                case &#39;bool&#39;: # Condiciones para un bool válido. boolDict se utiliza para añadir localización
+                                        boolDict = {&#39;true&#39;:True, &#39;t&#39;:True,&#39;si&#39;:True, &#39;s&#39;:True, &#39;yes&#39;:True, &#39;y&#39;:True, &#39;v&#39;:True, &#39;verdad&#39;:True, &#39;verdadero&#39;:True, &#39;1&#39;:True,
+                                        &#39;false&#39;:False, &#39;f&#39;:False, &#39;falso&#39;:False, &#39;falsa&#39;:False, &#39;no&#39;:False, &#39;n&#39;:False, &#39;0&#39;:False}
+                                        key = str(input(prompt)).lower()
+                                        value = boolDict.get(key)
+                                        if value != None:
+                                                isValid = True
+                                                return value
+                                        else:
+                                                raise TypeError # Fuerza la excepción TypeError, para evitar problemas conocidos del método __bool__()
+                except TypeError:
+                        print(&#39;ERROR: El dato ingresado no es un {}! Porfavor ingrese un {}.&#39;.format(dtype, dtype))
+                except ValueError:
+                        print(&#39;ERROR: El valor ingresado es inválido! Porfavor ingrese un numero entero mayor que {}.&#39;.format(gate))</code></pre>
+</details>
+<div class="desc"><p><func> getValidInput(prompt, dtype) : Obtiene un input válido dependiendo del tipo de dato y el valor del mismo.</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>prompt</code></strong> :&ensp;<code>str</code></dt>
 <dd>Texto que se mostrará en la consola para pedir un input</dd>
 <dt><strong><code>dtype</code></strong> :&ensp;<code>str</code>, optional</dt>
 <dd>Tipo de dato deseado. Por defecto es 'str'.</dd>
+<dt><strong><code>gate</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>Define un umbral inferior para los valores númericos.</dd>
 </dl>
 <h2 id="raises">Raises</h2>
 <dl>
@@ -69,6 +122,140 @@ el.replaceWith(d);
 <dd>Devuelve el input del usuario en el tipo de dato deseado y con las restricciones de valor deseadas</dd>
 </dl></div>
 </dd>
+<dt id="p2_extra.main"><code class="name flex">
+<span>def <span class="ident">main</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def main(): 
+        &#34;&#34;&#34;&lt;func&gt; main() : Función de ejecución primaria. Al llamarla se ejecuta el módulo.
+        &#34;&#34;&#34;
+        # Mensaje de bienvenida
+        print(&#39;+&#39;+&#39;=&#39;*100+&#39;+\n&#39;+&#39;Bienvenido! Esto es un simulador extra para el problema 2 de la tarea 1.\n&#39;+&#39;+&#39;+&#39;=&#39;*100+&#39;+&#39;)
+        print(&#39;Comenzando configuracion...&#39;)
+
+        # Se obtiene un input para la cantidad de escalones
+        nSteps = getValidInput(&#39;¿Cuantos escalones tiene la escalera? respuesta: &#39;, &#39;int&#39;)
+        print((&#39;Creando {} escalones...\n&#39;+&#39;+&#39;+&#39;-&#39;*100+&#39;+&#39;).format(str(nSteps)))
+        
+        # Se obtiene un input válido para la cantidad de gatos, se reintentará hasta que el usuario finalice la aplicación o la cantidad de gatos ingresada sea menor que la cantidad de escalones
+        isCatsLess = False
+        while not isCatsLess:
+                nCats = getValidInput(&#39;¿Cuantos gatitos hay? Recuerde que debe ser menos que la cantidad de escalones\nrespuesta: &#39;, &#39;int&#39;)
+                print(&#39;+&#39;+&#39;-&#39;*100+&#39;+&#39;)
+                if nCats &lt; nSteps:
+                        isCatsLess = True
+                else:
+                        print(&#39;ERROR: Hay mas gatitos que escalones! No podemos manejar tanta ternura&#39;)
+                        print(&#39;Porfavor reintente...&#39;)
+                        nCats = None
+                        isCatsLess = False
+        
+        # Se cobfigura la posición inicial de la marea, por defecto es 0
+        isCustomWater = getValidInput(&#39;¿Desea fijar una posición inicial para la marea?(y/n) &#39;, &#39;bool&#39;)
+        if isCustomWater:
+                isWaterLess = False
+                # Analogamente al input para la cantidad de gatos, se reintentará este input hasta que el usuario finalice la aplicación o la posición inicial de la marea sea válida.
+                while not isWaterLess:
+                        waterPos0 = getValidInput(&#39;Ingrese el escalón donde partirá la marea: &#39;, &#39;int&#39;)
+                        print(&#39;+&#39;+&#39;-&#39;*100+&#39;+&#39;)
+                        if waterPos0 &lt; (nSteps - nCats):
+                                isWaterLess = True
+                        else:
+                                print(&#39;ERROR: El valor ingresado es demasiado alto, no se podrá hacer la configuración inical correctamente...&#39;)
+                                print(&#39;Porfavor reintente...&#39;)
+                                waterPos0 = 0
+                                isWaterLess = False
+        else:
+                waterPos0 = 0
+        
+        # Da la opción de nombrar a los gatos y se crea la lista de objetos Cat
+        areNamed = getValidInput(&#39;¿Desea nombrar a sus gatitos?(y/n) &#39;, &#39;bool&#39;)
+        print(&#39;+&#39;+&#39;-&#39;*100+&#39;+&#39;)
+        catList = []
+
+        for i in range(0, nCats):
+                if areNamed:
+                        name = getValidInput(&#39;Ingrese el nombre del gatito n° {}: &#39;.format(str(i+1)), &#39;str&#39;)
+                else:
+                        name = &#39;GATO #{}&#39;.format(str(i+1))
+                pos = waterPos0 + i + 1
+                catList.append(Cat(name, pos, &#39;active&#39;))
+        
+        # Se crea la instancia stair del objeto Stair con la configuración dada
+        stair = Stair(nSteps, waterLevel=waterPos0, cats=catList)
+        catMove, waterMove, dt = 1, 1, 10
+
+        # Comienza la configuración de la simulación
+        isRandomized, isFair = None, None
+        isCustomConditions = getValidInput(&#39;¿Desea usar configuraciones avanzadas para el tiempo y movimientos de la marea y gatitos?(y/n) &#39;, &#39;bool&#39;)
+        print(&#39;+&#39;+&#39;-&#39;*100+&#39;+&#39;)
+        if isCustomConditions: # Se usan condiciones personalizadas
+                isFair = getValidInput(&#39;¿Desea que el moviemiento sea justo? Es decir, que la marea y los gatitos se muevan la misma distancia. (y/n) &#39;, &#39;bool&#39;)
+                print(&#39;+&#39;+&#39;-&#39;*100+&#39;+&#39;)
+                isRandomized = getValidInput(&#39;La opción de movimiento aleatorio utiliza intervalos de tiempo fijos de 10 segundos.\nAl activarla no podrá configurar el intervalo de tiempo entre movimientos.\n¿Desea que el moviemiento sea aleatorio?(y/n) &#39;, &#39;bool&#39;)
+                print(&#39;+&#39;+&#39;-&#39;*100+&#39;+&#39;)
+                if not isRandomized: # Configuración con movimiento NO aleatorio
+                        if isFair: # Configuración con movimiento justo, es decir, la marea y los gatos se mueven la misma distancia
+                                dx = getValidInput(&#39;Como ha seleccionado movimiento justo, la marea y los gatitos se moverán la misma distancia y esta debe ser un numero entero positivo.\nIngrese la distancia del movimiento: &#39;, &#39;int&#39;)
+                                print(&#39;+&#39;+&#39;-&#39;*100+&#39;+&#39;)
+                                catMove, waterMove = dx, dx
+                                dt = getValidInput(&#39;Ingrese el intervalo de tiempo entre movimientos en segundos. dt: &#39;, &#39;int&#39;)
+                                print(&#39;+&#39;+&#39;-&#39;*100+&#39;+&#39;)
+                        else: # Configuración sin movimiento justo
+                                print(&#39;Como no ha seleccionado movimiento justo, deberá configurar el movimiento de la marea y los gatitos de forma separada y estas deben ser numeros enteros positivos.&#39;)
+                                catMove = getValidInput(&#39;Ingrese la distancia del movimiento de los gatitos: &#39;, &#39;int&#39;)
+                                print(&#39;+&#39;+&#39;-&#39;*100+&#39;+&#39;)
+                                waterMove = getValidInput(&#39;Ingrese la distancia del movimiento de la marea: &#39;, &#39;int&#39;)
+                                print(&#39;+&#39;+&#39;-&#39;*100+&#39;+&#39;)
+                                dt = getValidInput(&#39;Ingrese el intervalo de tiempo entre movimientos en segundos: &#39;, &#39;int&#39;)
+                else: # Configuración con movimiento aleatorio
+                        isRandomized, isFair = False, False
+        
+        # Se imprime un resumen de las configuraciones de la simulación
+        print(&#39;+&#39;+&#39;=&#39;*100+&#39;+&#39;)
+        print(&#39;+ &#39;+&#39;Resumen de la configuración:&#39;)
+        print(&#39;+ &#39;+&#39;N° escalones = {}&#39;.format(nSteps))
+        print(&#39;+ &#39;+&#39;N° Gatitos = {}&#39;.format(nCats))
+        print(&#39;+ &#39;+&#39;Config Avanzada Activada? [{}]&#39;.format(isCustomConditions))
+                #Formato Condicional dependiente de la existencia de configuraciones avanzadas
+        if isCustomConditions:
+                print(&#39;+ &#39;+&#39;Mov. Justo? [{}]&#39;.format(isFair))
+                print(&#39;+ &#39;+&#39;Distancia Mov. Aleatoria? [{}]&#39;.format(isRandomized))
+                if not isRandomized:
+                        print(&#39;+ &#39;+&#39;Distancia Mov. Marea = {} escalones por intervalo&#39;.format(waterMove))
+                        print(&#39;+ &#39;+&#39;Distancia Mov. Gatitos = {} escalones por intervalo&#39;.format(catMove))
+                        print(&#39;+ &#39;+&#39;Intervalo entre Mov. = {} segundos&#39;.format(dt))
+                else:
+                        print(&#39;+ &#39;+&#39;Distancia Mov. Marea = Aleatoria&#39;)
+                        print(&#39;+ &#39;+&#39;Distancia Mov. Gatitos = Aleatoria&#39;)
+                        print(&#39;+ &#39;+&#39;Intervalo entre Mov. = 10 segundos&#39;)
+        else:
+                print(&#39;+ &#39;+&#39;Distancia Mov. Marea = 1 escalón por intervalo&#39;)
+                print(&#39;+ &#39;+&#39;Distancia Mov. Gatitos = 1 escalón por intervalo&#39;)
+                print(&#39;+ &#39;+&#39;Intervalo entre Mov. = 10 segundos&#39;)
+        
+        # Mensaje de comienzo de la simulación
+        print(&#39;+&#39;+&#39;=&#39;*100+&#39;+&#39;)
+        print(&#39;Comenzando la simulación...&#39;)
+        print(&#39;+&#39;+&#39;=&#39;*100+&#39;+&#39;)
+        
+        # Comienzo de la simulación
+        isRunning = True
+        isFirst = True
+        while isRunning:
+                if isFirst:
+                        parsed = stair.parseCats()
+                        stair.printStairState(parsed[0], parsed[1], isFinal=False)
+                        isFirst = False
+                        time.sleep(dt)
+                isRunning = stair.update(moveCats=catMove, moveWater=waterMove, dt=dt, isFair=isFair, isRandomized=isRandomized) #stair.update devuelve un bool que será False si y sólo si se cumplen las condiciones necesarioas para finalizar la simulación</code></pre>
+</details>
+<div class="desc"><p><func> main() : Función de ejecución primaria. Al llamarla se ejecuta el módulo.</p></div>
+</dd>
 </dl>
 </section>
 <section>
@@ -79,6 +266,43 @@ el.replaceWith(d);
 <span>(</span><span>name, pos, status='active')</span>
 </code></dt>
 <dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Cat: 
+        &#34;&#34;&#34;&lt;class&gt; Cat : Objeto que representa a un gato.
+
+                Métodos:
+                        - __init__
+                        - setStatus
+                        - setPosition
+        &#34;&#34;&#34;
+        def __init__(self, name, pos, status=&#39;active&#39;):
+                &#34;&#34;&#34;&lt;method&gt; Uso: Cat(name, pos, status=&#39;active&#39;) : Inicializa una instancia del objeto Cat.
+
+                Args:
+                        name (string): Nombre del gato
+                        pos (int): Posición en la escalera del gato.
+                        status (str, optional): Estado del gato. Puede ser (&#39;active&#39;, &#39;sunk&#39;, &#39;safe&#39;). Por defecto es &#39;active&#39;.
+                &#34;&#34;&#34;     
+                self.name, self.pos, self.status, self.wasStatusChangedLast = name, pos, status, False
+        
+        def setStatus(self, new):
+                &#34;&#34;&#34;&lt;method&gt; Uso: self.setStatus(new) : Cambia el valor de Cat.status
+
+                Args:
+                        new (string): Nuevo estado del gato. Puede ser (&#39;active&#39;, &#39;sunk&#39;, &#39;safe&#39;)
+                &#34;&#34;&#34;     
+                self.status = new
+        def setPosition(self, new):
+                &#34;&#34;&#34;&lt;method&gt; Uso: self.setPosition(new) : Cambia el valor de Cat.pos
+
+                Args:
+                        new (int): Nueva posición del gato en la escalera. Debe ser un entero positivo no nulo.
+                &#34;&#34;&#34;     
+                self.pos = new</code></pre>
+</details>
 <div class="desc"><p><class> Cat : Objeto que representa a un gato.</p>
 <h2 id="metodos">Métodos</h2>
 <ul>
@@ -86,7 +310,7 @@ el.replaceWith(d);
 <li>setStatus</li>
 <li>setPosition</li>
 </ul>
-<p><method> <strong>init</strong>(self, name, pos, status='active') : Inicializa una instancia del objeto Cat</p>
+<p><method> Uso: Cat(name, pos, status='active') : Inicializa una instancia del objeto Cat.</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>name</code></strong> :&ensp;<code>string</code></dt>
@@ -102,7 +326,19 @@ el.replaceWith(d);
 <span>def <span class="ident">setPosition</span></span>(<span>self, new)</span>
 </code></dt>
 <dd>
-<div class="desc"><p><method> setPosition(self, new) : Cambia el valor de self.pos</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setPosition(self, new):
+        &#34;&#34;&#34;&lt;method&gt; Uso: self.setPosition(new) : Cambia el valor de Cat.pos
+
+        Args:
+                new (int): Nueva posición del gato en la escalera. Debe ser un entero positivo no nulo.
+        &#34;&#34;&#34;     
+        self.pos = new</code></pre>
+</details>
+<div class="desc"><p><method> Uso: self.setPosition(new) : Cambia el valor de Cat.pos</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>new</code></strong> :&ensp;<code>int</code></dt>
@@ -113,7 +349,19 @@ el.replaceWith(d);
 <span>def <span class="ident">setStatus</span></span>(<span>self, new)</span>
 </code></dt>
 <dd>
-<div class="desc"><p><method> setStatus(self, new) : Cambia el valor de self.status</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def setStatus(self, new):
+        &#34;&#34;&#34;&lt;method&gt; Uso: self.setStatus(new) : Cambia el valor de Cat.status
+
+        Args:
+                new (string): Nuevo estado del gato. Puede ser (&#39;active&#39;, &#39;sunk&#39;, &#39;safe&#39;)
+        &#34;&#34;&#34;     
+        self.status = new</code></pre>
+</details>
+<div class="desc"><p><method> Uso: self.setStatus(new) : Cambia el valor de Cat.status</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>new</code></strong> :&ensp;<code>string</code></dt>
@@ -127,7 +375,177 @@ el.replaceWith(d);
 <span>(</span><span>stepsTotal, waterLevel=0, cats=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p><class> Stair : Objeto que define la escalera y maneja la simulación</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Stair:
+        &#34;&#34;&#34;&lt;class&gt; Stair : Objeto que define la escalera y maneja la ejecución de la simulación. Solo definir 1 instancia
+
+                Métodos:
+                        - __init__
+                        - printStairState
+                        - raiseWater
+                        - updateCats
+                        - CatCount
+                        - update
+        &#34;&#34;&#34;    
+        def __init__(self, stepsTotal, waterLevel=0, cats=None):
+                &#34;&#34;&#34;&lt;method&gt; __init__(self, stepsTotal, waterLevel=0, cats=None): Inicializa una instancia del objeto Stair
+
+                Args:
+                        stepsTotal (int): Cantidad de escalones total
+                        waterLevel (int, optional): Posicion Inicial de la marea. Por defecto es 0.
+                        cats (list(typeof(&lt;class Cat&gt;)), optional): Lista que contiene instancias del objeto Cat.Por defecto es None.
+                &#34;&#34;&#34;     
+                self.N = stepsTotal #Cantidad de escalones
+                self.dTime = 0 #Tiempo Inicial en segundos, siempre será 0
+                self.waterPos = waterLevel #Posición de la marea, por defecto es 0
+                # Verifica que se haya entregado un valor para cats y define self.cats y self.isCatsVoid
+                if cats != None: 
+                        self.cats = cats
+                        self.isCatsVoid = False
+                else:
+                        self.cats = []
+                        self.isCatsVoid = True
+        
+        def printStairState(self, catGroups, counts, isFinal=False):
+                &#34;&#34;&#34;&lt;method&gt; printStairState(self, catGroups, counts, isFinal=False) : Imprime el estado actual de la simulación
+
+                Args:
+                        catGroups (_type_): _description_
+                        counts (_type_): _description_
+                        isFinal (bool, optional): _description_. Defaults to False.
+                &#34;&#34;&#34;                 
+                #Convierte self.dTime a formato hh:mm:ss
+                mins = int(self.dTime//60)
+                secs = int(self.dTime - 60*mins)
+                hours = int(mins//60)
+                mins -= 60*hours
+
+                ver = &#39;Actual&#39;
+                if isFinal:
+                        ver = &#39;Final&#39;
+                
+                #Comienza la impresión del estado de la simulación
+                print(&#39;+&#39;+&#39;-&#39;*100+&#39;+&#39;)
+                print(&#39;Tiempo {}(hh:mm:ss): {}:{}:{}&#39;.format(ver, hours, mins, secs))
+                print(&#39;Posicion de la marea: escalón n° {}&#39;.format(self.waterPos))
+                print(&#39;N° Gatitos Activos:      {}&#39;.format(counts[0]))
+                if counts[0] &gt; 0: #Añade formato condicional para mostrar los gatos que correspondan
+                        for cat in catGroups[0]:
+                                print(&#39; -&gt; ID: {} - Posición: {}&#39;.format(cat.name, cat.pos))
+                print(&#39;N° Gatitos Hundidos:     {}&#39;.format(counts[1]))
+                if counts[1] &gt; 0: #Añade formato condicional para mostrar los gatos que correspondan
+                        for cat in catGroups[1]:
+                                print(&#39; -&gt; ID: {} - Posición: {}&#39;.format(cat.name, cat.pos))
+                print(&#39;N° Gatitos A Salvo:      {}&#39;.format(counts[2]))
+                if counts[2] &gt; 0: #Añade formato condicional para mostrar los gatos que correspondan
+                        for cat in catGroups[2]:
+                                print(&#39; -&gt; ID: {}&#39;.format(cat.name))
+                print(&#39;+&#39;+&#39;-&#39;*100+&#39;+&#39;)
+        
+        def parseCats(self):
+                &#34;&#34;&#34;&lt;method&gt; parseCats(self) : Separa y cuenta las instancias de Cat en self.cats según su estado.
+
+                Returns:
+                        array: [catGroups, counters] - Donde &#34;catGroups&#34; es una lista de 3 listas con instancias de Cat separadas por estado y &#34;counters&#34; la lista de los largos de estas.
+                &#34;&#34;&#34;             
+                catGroups = [[],[],[]]
+                counters = [0, 0, 0]
+                for cat in self.cats:
+                        match cat.status:
+                                case &#39;active&#39;:
+                                        catGroups[0].append(cat)
+                                        counters[0] += 1
+                                case &#39;sunk&#39;:
+                                        catGroups[1].append(cat)
+                                        counters[1] += 1
+                                case &#39;safe&#39;:
+                                        catGroups[2].append(cat)
+                                        counters[2] += 1
+                
+                return [catGroups, counters]
+
+        def update(self, moveCats=1, moveWater=1, dt=10, isFair=True, isRandomized=False):
+                &#34;&#34;&#34;&lt;method&gt; update(self, moveCats=1, moveWater=1, dt=10, isFair=True, isRandomized=False) : Actualiza la simulación
+
+                Args:
+                        moveCats (int, optional): Cantidad de escalones que recorren los gatos. Defaults to 1.
+                        moveWater (int, optional): Cantidad de escalones que recorre la marea. Defaults to 1.
+                        dt (int, optional): Intervalo de tiempo elapsado. Defaults to 10.
+                        isFair (bool, optional): Condicional de movimiento justo. Defaults to True.
+                        isRandomized (bool, optional): Condicional de movimiento aleatorio. Defaults to False.
+
+                Returns:
+                        bool: Determina si la simulación continua. Para False, se detiene la simulación
+                &#34;&#34;&#34;             
+
+                # Verifica si está usando la configuración aleatoria
+                if isRandomized:
+                        # Verifica si está usando la configuración de movimiento justo
+                        if isFair:
+                                moveCats = random.randint(1, (self.N))
+                                moveWater = moveCats
+                        else:
+                                moveCats = random.randint(1, (self.N))
+                                moveWater = random.randint(1, (self.N))
+                
+                # Mueve la marea y avanza el tiempo
+                self.waterPos += moveWater
+                self.dTime += dt
+                
+                # Separa y cuenta los gatos por cat.status
+                parsed = self.parseCats()
+                catGroups, counters = parsed[0], parsed[1]
+                
+                # Mueve a los gatos activos
+                if counters[0] != 0:
+                        for cat in catGroups[0]:
+                                newPos = cat.pos + moveCats
+                                if newPos &gt; self.N:
+                                        cat.setStatus(&#39;safe&#39;)
+                                        cat.setPosition(self.N + 1)
+                                        catGroups[2].append(cat)
+                                        counters[2] += 1
+                                        catGroups[0].remove(cat)
+                                        counters[0] -= 1
+                                
+                                elif newPos &lt;= self.waterPos:
+                                        cat.setStatus(&#39;sunk&#39;)
+                                        cat.setPosition(newPos)
+                                        catGroups[1].append(cat)
+                                        counters[1] += 1
+                                        catGroups[0].remove(cat)
+                                        counters[0] -= 1
+                                else:
+                                        cat.setPosition(newPos)
+
+                if (self.waterPos &gt;= self.N):
+                        print(&#34; --- MSG: La marea ha alcanzado el final de la escalera... --- &#34;)
+                        self.printStairState(catGroups, counters, isFinal=True)
+                        return False
+
+                elif counters[0] == 0:
+                        print(&#34; --- MSG: No quedan gatos activos ---&#34;)
+                        self.printStairState(catGroups, counters, isFinal=True)
+                        return False
+
+                else:
+                        self.printStairState(catGroups, counters, isFinal=False)
+                        time.sleep(dt)
+                        return True</code></pre>
+</details>
+<div class="desc"><p><class> Stair : Objeto que define la escalera y maneja la ejecución de la simulación. Solo definir 1 instancia</p>
+<h2 id="metodos">Métodos</h2>
+<ul>
+<li><strong>init</strong></li>
+<li>printStairState</li>
+<li>raiseWater</li>
+<li>updateCats</li>
+<li>CatCount</li>
+<li>update</li>
+</ul>
 <p><method> <strong>init</strong>(self, stepsTotal, waterLevel=0, cats=None): Inicializa una instancia del objeto Stair</p>
 <h2 id="args">Args</h2>
 <dl>
@@ -139,77 +557,194 @@ el.replaceWith(d);
 <p>cats (list(typeof(<class Cat>)), optional): Lista que contiene instancias del objeto Cat.Por defecto es None.</p></div>
 <h3>Methods</h3>
 <dl>
-<dt id="p2_extra.Stair.CatCount"><code class="name flex">
-<span>def <span class="ident">CatCount</span></span>(<span>self)</span>
+<dt id="p2_extra.Stair.parseCats"><code class="name flex">
+<span>def <span class="ident">parseCats</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<div class="desc"><p><method> CatCount(self) : </p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def parseCats(self):
+        &#34;&#34;&#34;&lt;method&gt; parseCats(self) : Separa y cuenta las instancias de Cat en self.cats según su estado.
+
+        Returns:
+                array: [catGroups, counters] - Donde &#34;catGroups&#34; es una lista de 3 listas con instancias de Cat separadas por estado y &#34;counters&#34; la lista de los largos de estas.
+        &#34;&#34;&#34;             
+        catGroups = [[],[],[]]
+        counters = [0, 0, 0]
+        for cat in self.cats:
+                match cat.status:
+                        case &#39;active&#39;:
+                                catGroups[0].append(cat)
+                                counters[0] += 1
+                        case &#39;sunk&#39;:
+                                catGroups[1].append(cat)
+                                counters[1] += 1
+                        case &#39;safe&#39;:
+                                catGroups[2].append(cat)
+                                counters[2] += 1
+        
+        return [catGroups, counters]</code></pre>
+</details>
+<div class="desc"><p><method> parseCats(self) : Separa y cuenta las instancias de Cat en self.cats según su estado.</p>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>List</code></dt>
-<dd>Lista que contiene los conteos(int) por estado de los elementos de self.cats. Es de la forma [int, int, int]</dd>
+<dt><code>array</code></dt>
+<dd>[catGroups, counters] - Donde "catGroups" es una lista de 3 listas con instancias de Cat separadas por estado y "counters" la lista de los largos de estas.</dd>
 </dl></div>
 </dd>
 <dt id="p2_extra.Stair.printStairState"><code class="name flex">
-<span>def <span class="ident">printStairState</span></span>(<span>self, isFinal=False)</span>
+<span>def <span class="ident">printStairState</span></span>(<span>self, catGroups, counts, isFinal=False)</span>
 </code></dt>
 <dd>
-<div class="desc"><p><method> printStairState(self, isFinal=False): Imprime el estado actual de la simulación</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def printStairState(self, catGroups, counts, isFinal=False):
+        &#34;&#34;&#34;&lt;method&gt; printStairState(self, catGroups, counts, isFinal=False) : Imprime el estado actual de la simulación
+
+        Args:
+                catGroups (_type_): _description_
+                counts (_type_): _description_
+                isFinal (bool, optional): _description_. Defaults to False.
+        &#34;&#34;&#34;                 
+        #Convierte self.dTime a formato hh:mm:ss
+        mins = int(self.dTime//60)
+        secs = int(self.dTime - 60*mins)
+        hours = int(mins//60)
+        mins -= 60*hours
+
+        ver = &#39;Actual&#39;
+        if isFinal:
+                ver = &#39;Final&#39;
+        
+        #Comienza la impresión del estado de la simulación
+        print(&#39;+&#39;+&#39;-&#39;*100+&#39;+&#39;)
+        print(&#39;Tiempo {}(hh:mm:ss): {}:{}:{}&#39;.format(ver, hours, mins, secs))
+        print(&#39;Posicion de la marea: escalón n° {}&#39;.format(self.waterPos))
+        print(&#39;N° Gatitos Activos:      {}&#39;.format(counts[0]))
+        if counts[0] &gt; 0: #Añade formato condicional para mostrar los gatos que correspondan
+                for cat in catGroups[0]:
+                        print(&#39; -&gt; ID: {} - Posición: {}&#39;.format(cat.name, cat.pos))
+        print(&#39;N° Gatitos Hundidos:     {}&#39;.format(counts[1]))
+        if counts[1] &gt; 0: #Añade formato condicional para mostrar los gatos que correspondan
+                for cat in catGroups[1]:
+                        print(&#39; -&gt; ID: {} - Posición: {}&#39;.format(cat.name, cat.pos))
+        print(&#39;N° Gatitos A Salvo:      {}&#39;.format(counts[2]))
+        if counts[2] &gt; 0: #Añade formato condicional para mostrar los gatos que correspondan
+                for cat in catGroups[2]:
+                        print(&#39; -&gt; ID: {}&#39;.format(cat.name))
+        print(&#39;+&#39;+&#39;-&#39;*100+&#39;+&#39;)</code></pre>
+</details>
+<div class="desc"><p><method> printStairState(self, catGroups, counts, isFinal=False) : Imprime el estado actual de la simulación</p>
 <h2 id="args">Args</h2>
 <dl>
+<dt><strong><code>catGroups</code></strong> :&ensp;<code>_type_</code></dt>
+<dd><em>description</em></dd>
+<dt><strong><code>counts</code></strong> :&ensp;<code>_type_</code></dt>
+<dd><em>description</em></dd>
 <dt><strong><code>isFinal</code></strong> :&ensp;<code>bool</code>, optional</dt>
-<dd>Define si se mostrará el resumen final. Por defecto es False.</dd>
-</dl></div>
-</dd>
-<dt id="p2_extra.Stair.raiseWater"><code class="name flex">
-<span>def <span class="ident">raiseWater</span></span>(<span>self, n, dt)</span>
-</code></dt>
-<dd>
-<div class="desc"><p><method> raiseWater(self, n, dt) : Mueve la marea n escalones en un intervalo de tiempo dt.</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>n</code></strong> :&ensp;<code>int</code></dt>
-<dd>Cantidad de escalones que avanza la marea.</dd>
-<dt><strong><code>dt</code></strong> :&ensp;<code>int, float</code></dt>
-<dd>Intervalo de tiempo en segundos. <a href="https://docs.python.org/3/library/time.html#time.sleep">https://docs.python.org/3/library/time.html#time.sleep</a> para más información</dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><code>bool</code></dt>
-<dd>Determina si la simulación termina.</dd>
+<dd><em>description</em>. Defaults to False.</dd>
 </dl></div>
 </dd>
 <dt id="p2_extra.Stair.update"><code class="name flex">
-<span>def <span class="ident">update</span></span>(<span>self, nCats=1, nWater=1, dt=10, isFair=True, isRandomized=False)</span>
+<span>def <span class="ident">update</span></span>(<span>self, moveCats=1, moveWater=1, dt=10, isFair=True, isRandomized=False)</span>
 </code></dt>
 <dd>
-<div class="desc"><p><method> update(self, nCats=1, nWater=1, dt=10, isFair=True, isRandomized=False) : Avanza la simulación.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def update(self, moveCats=1, moveWater=1, dt=10, isFair=True, isRandomized=False):
+        &#34;&#34;&#34;&lt;method&gt; update(self, moveCats=1, moveWater=1, dt=10, isFair=True, isRandomized=False) : Actualiza la simulación
+
+        Args:
+                moveCats (int, optional): Cantidad de escalones que recorren los gatos. Defaults to 1.
+                moveWater (int, optional): Cantidad de escalones que recorre la marea. Defaults to 1.
+                dt (int, optional): Intervalo de tiempo elapsado. Defaults to 10.
+                isFair (bool, optional): Condicional de movimiento justo. Defaults to True.
+                isRandomized (bool, optional): Condicional de movimiento aleatorio. Defaults to False.
+
+        Returns:
+                bool: Determina si la simulación continua. Para False, se detiene la simulación
+        &#34;&#34;&#34;             
+
+        # Verifica si está usando la configuración aleatoria
+        if isRandomized:
+                # Verifica si está usando la configuración de movimiento justo
+                if isFair:
+                        moveCats = random.randint(1, (self.N))
+                        moveWater = moveCats
+                else:
+                        moveCats = random.randint(1, (self.N))
+                        moveWater = random.randint(1, (self.N))
+        
+        # Mueve la marea y avanza el tiempo
+        self.waterPos += moveWater
+        self.dTime += dt
+        
+        # Separa y cuenta los gatos por cat.status
+        parsed = self.parseCats()
+        catGroups, counters = parsed[0], parsed[1]
+        
+        # Mueve a los gatos activos
+        if counters[0] != 0:
+                for cat in catGroups[0]:
+                        newPos = cat.pos + moveCats
+                        if newPos &gt; self.N:
+                                cat.setStatus(&#39;safe&#39;)
+                                cat.setPosition(self.N + 1)
+                                catGroups[2].append(cat)
+                                counters[2] += 1
+                                catGroups[0].remove(cat)
+                                counters[0] -= 1
+                        
+                        elif newPos &lt;= self.waterPos:
+                                cat.setStatus(&#39;sunk&#39;)
+                                cat.setPosition(newPos)
+                                catGroups[1].append(cat)
+                                counters[1] += 1
+                                catGroups[0].remove(cat)
+                                counters[0] -= 1
+                        else:
+                                cat.setPosition(newPos)
+
+        if (self.waterPos &gt;= self.N):
+                print(&#34; --- MSG: La marea ha alcanzado el final de la escalera... --- &#34;)
+                self.printStairState(catGroups, counters, isFinal=True)
+                return False
+
+        elif counters[0] == 0:
+                print(&#34; --- MSG: No quedan gatos activos ---&#34;)
+                self.printStairState(catGroups, counters, isFinal=True)
+                return False
+
+        else:
+                self.printStairState(catGroups, counters, isFinal=False)
+                time.sleep(dt)
+                return True</code></pre>
+</details>
+<div class="desc"><p><method> update(self, moveCats=1, moveWater=1, dt=10, isFair=True, isRandomized=False) : Actualiza la simulación</p>
 <h2 id="args">Args</h2>
 <dl>
-<dt><strong><code>nCats</code></strong> :&ensp;<code>int</code>, optional</dt>
-<dd>Cantidad de escalones que se mueve cada gato. Por defecto es 1.</dd>
-<dt><strong><code>nWater</code></strong> :&ensp;<code>int</code>, optional</dt>
-<dd>Cantidad de escalones que se mueve la marea. Por defecto es 1.</dd>
+<dt><strong><code>moveCats</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>Cantidad de escalones que recorren los gatos. Defaults to 1.</dd>
+<dt><strong><code>moveWater</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>Cantidad de escalones que recorre la marea. Defaults to 1.</dd>
 <dt><strong><code>dt</code></strong> :&ensp;<code>int</code>, optional</dt>
-<dd>Intervalo de tiempo en segundos. Por defecto es 10.</dd>
+<dd>Intervalo de tiempo elapsado. Defaults to 10.</dd>
 <dt><strong><code>isFair</code></strong> :&ensp;<code>bool</code>, optional</dt>
-<dd>Determina si la marea se mueve la misma cantidad de escalones que los gatos. Por defecto es True.</dd>
+<dd>Condicional de movimiento justo. Defaults to True.</dd>
 <dt><strong><code>isRandomized</code></strong> :&ensp;<code>bool</code>, optional</dt>
-<dd>Determina si el movimiento de los gatos y la marea es aleatorio. Por defecto es False.</dd>
+<dd>Condicional de movimiento aleatorio. Defaults to False.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>bool</code></dt>
-<dd>Llama al metodo self.raiseWater y repite su respuesta.</dd>
+<dd>Determina si la simulación continua. Para False, se detiene la simulación</dd>
 </dl></div>
-</dd>
-<dt id="p2_extra.Stair.updateCats"><code class="name flex">
-<span>def <span class="ident">updateCats</span></span>(<span>self)</span>
-</code></dt>
-<dd>
-<div class="desc"><p><method> updateCats(self) : Actualiza la posición y estado de los elementos de self.cats</p>
-<h2 id="raises">Raises</h2>
-<p>exit(0) : Falla critica, dado que self.cats es una lista vacía.</p></div>
 </dd>
 </dl>
 </dd>
@@ -224,6 +759,7 @@ el.replaceWith(d);
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
 <li><code><a title="p2_extra.getValidInput" href="#p2_extra.getValidInput">getValidInput</a></code></li>
+<li><code><a title="p2_extra.main" href="#p2_extra.main">main</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-classes">Classes</a></h3>
@@ -238,11 +774,9 @@ el.replaceWith(d);
 <li>
 <h4><code><a title="p2_extra.Stair" href="#p2_extra.Stair">Stair</a></code></h4>
 <ul class="">
-<li><code><a title="p2_extra.Stair.CatCount" href="#p2_extra.Stair.CatCount">CatCount</a></code></li>
+<li><code><a title="p2_extra.Stair.parseCats" href="#p2_extra.Stair.parseCats">parseCats</a></code></li>
 <li><code><a title="p2_extra.Stair.printStairState" href="#p2_extra.Stair.printStairState">printStairState</a></code></li>
-<li><code><a title="p2_extra.Stair.raiseWater" href="#p2_extra.Stair.raiseWater">raiseWater</a></code></li>
 <li><code><a title="p2_extra.Stair.update" href="#p2_extra.Stair.update">update</a></code></li>
-<li><code><a title="p2_extra.Stair.updateCats" href="#p2_extra.Stair.updateCats">updateCats</a></code></li>
 </ul>
 </li>
 </ul>
