@@ -34,12 +34,13 @@ import time
 import random, sys # Importa las librerias adicionales random y sys
 
 
-def getValidInput(prompt, dtype='str'):
+def getValidInput(prompt, dtype='str', gate=0):
 	"""<func> getValidInput(prompt, dtype='str') : Obtiene un input válido dependiendo del tipo de dato y el valor del mismo.
 
 	Args:
 		prompt (str): Texto que se mostrará en la consola para pedir un input
 		dtype (str, optional): Tipo de dato deseado. Por defecto es 'str'.
+		gate (int, optional): Define un umbral inferior para los valores númericos.
 
 	Raises:
 		ValueError: Valor inesperado
@@ -60,7 +61,7 @@ def getValidInput(prompt, dtype='str'):
 					return value
 				case 'int': # Condiciones para un int válido. Para los fines de este módulo siempre deben ser positivos y mayores que cero.
 					value = int(input(prompt))
-					if value <= 0: # Fuerza la excepción ValueError, ya que el dato ingresado es <= 0
+					if value <= gate: # Fuerza la excepción ValueError, ya que el dato ingresado es <= 0
 						raise ValueError
 					else:
 						isValid = True
@@ -78,7 +79,7 @@ def getValidInput(prompt, dtype='str'):
 		except TypeError:
 			print('ERROR: El dato ingresado no es un {}! Porfavor ingrese un {}.'.format(dtype, dtype))
 		except ValueError:
-			print('ERROR: El valor ingresado es inválido! Porfavor ingrese un numero entero positivo.')
+			print('ERROR: El valor ingresado es inválido! Porfavor ingrese un numero entero mayor que {}.'.format(gate))
 
 class Stair:
 	"""<class> Stair : Objeto que define la escalera y maneja la ejecución de la simulación. Solo definir 1 instancia
@@ -331,8 +332,8 @@ class Cat:
 		"""     
 		self.pos = new
 
-def __main__(): 
-	"""<func> __main__() : Función de ejecución primaria. Al llamarla se ejecuta el módulo.
+def main(): 
+	"""<func> main() : Función de ejecución primaria. Al llamarla se ejecuta el módulo.
 	"""
 	# Mensaje de bienvenida
 	print('+'+'='*100+'+\n'+'Bienvenido! Esto es un simulador extra para el problema 2 de la tarea 1.\n'+'+'+'='*100+'+')
@@ -358,7 +359,7 @@ def __main__():
 	# Se cobfigura la posición inicial de la marea, por defecto es 0
 	isCustomWater = getValidInput('¿Desea fijar una posición inicial para la marea?(y/n) ', 'bool')
 	if isCustomWater:
-		iswaterLess = False
+		isWaterLess = False
 		# Analogamente al input para la cantidad de gatos, se reintentará este input hasta que el usuario finalice la aplicación o la posición inicial de la marea sea válida.
 		while not isWaterLess:
 			waterPos0 = getValidInput('Ingrese el escalón donde partirá la marea: ', 'int')
@@ -368,7 +369,7 @@ def __main__():
 			else:
 				print('ERROR: El valor ingresado es demasiado alto, no se podrá hacer la configuración inical correctamente...')
 				print('Porfavor reintente...')
-				waterPos0 = None
+				waterPos0 = 0
 				isWaterLess = False
 	else:
 		waterPos0 = 0
@@ -381,12 +382,14 @@ def __main__():
 		print(('Creando {} gatitos...\n'+'\nA continuacion nombre a sus gatitos...\n'+'+'+'-'*100+'+').format(str(nCats)))
 		for i in range(0, nCats):
 			name = getValidInput('Ingrese el nombre del gatito n° {}: '.format(str(i+1)), 'str')
-			catList.append(Cat(name, i+1))
+			pos = getValidInput('Ingrese la posición inicial del gatito n° {}: '.format(str(i+1)), 'str', water=waterPos0)
+			catList.append(Cat(name, pos))
 	else: # Crea la lista de objetos Cat, usando nombres autogenerados
 		print(('Creando {} gatitos...\n'+'+'+'-'*100+'+').format(str(nCats)))
 		for i in range(0, nCats):
 			name = 'GATO #{}'.format(str(i+1))
-			catList.append(Cat(name, i+1))
+			pos = waterPos0 + i + 1
+			catList.append(Cat(name, pos))
 	
 	# Crea la instancia stair del objeto Stair con la configuración dada
 	stair = Stair(nSteps, waterLevel=waterPos0, cats=catList)
@@ -450,3 +453,6 @@ def __main__():
 	isRunning = True
 	while isRunning:
 		isRunning = stair.update(nCats=1, nWater=1, dt=10, isFair=isFair, isRandomized=isRandomized) #stair.update devuelve un bool que será False si y sólo si se cumplen las condiciones necesarioas para finalizar la simulación
+
+if __name__ == "__main__":
+	main()
