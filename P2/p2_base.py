@@ -20,7 +20,8 @@ s5 = None
 
 import time
 for i in range(3):
-	#Inicio código añadido por Gabriel Andrés Castillo Rosales
+	# TO DO
+		#Inicio código añadido por Gabriel Andrés Castillo Rosales
 	dt = 10*(i + 1)
 	match i:
 		case 0:
@@ -53,13 +54,8 @@ for i in range(3):
 			s1 = s0
 			s2 = s1
 		case _:
-			s0 = 'GATO 1'
-			s1 = 'GATO 2'
-			s2 = 'GATO 3'
-
-			s3 = None
-			s4 = None
-			s5 = None
+			break
+		
 	print('+'+'-'*50+'+')
 	print('Tiempo elapsado: {} segundos.'.format(str(dt)))
 	print('Escalón 1: ', s0)
@@ -68,5 +64,5 @@ for i in range(3):
 	print('Escalón 4: ', s3)
 	print('Escalón 5: ', s4)
 	print('Escalón 6: ', s5)
-	#Fin código añadido por Gabriel Andrés Castillo Rosales
+		#Fin código añadido por Gabriel Andrés Castillo Rosales
 	time.sleep(10)

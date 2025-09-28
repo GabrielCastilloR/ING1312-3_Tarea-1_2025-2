@@ -21,17 +21,20 @@ Saludo = C + " " + Nombre + "! Cómo estás?"
 C = "Hola"
 D = 3.1415
 Temp = None
+
+# Comienzo de la solución propuesta
+
 print("Previo al intercambio...")
 print("Valor C: ", C)
 print("Valor D: ", D)
 print("Valor Temp: ", Temp)
 print("-"*30)
 
-#Comienza el intercambio
-Temp = C
-C = D
-D = Temp
-Temp = None
+    # Comienza el intercambio
+Temp = C        # Se asigna el valor de C a Temp
+C = D           # Se asigna el valor de D a C
+D = Temp        # Se asigna el valor de Temp a D
+Temp = None     # Se asigna el valor None a Temp
 
 print("Posterior al intercambio...")
 print("Valor C: ", C)
