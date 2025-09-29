@@ -1,0 +1,161 @@
+<h1 id="problema-2-extra">Problema 2 Extra.</h1>
+<h2
+id="autor-gabriel-andres-castillo-rosales-rut-19679401-8-docente-matias-pastene-orellana-curso-ing1312-seccion-3">Autor:
+Gabriel Andres Castillo Rosales<br />
+RUT: 19.679.401-8<br />
+Docente: Matias Pastene Orellana<br />
+Curso: ING1312<br />
+Seccion: 3</h2>
+<p><strong>Descripcion:</strong> Modulo extra para P2 de tarea 1.<br />
+Simulacion de la escalera siendo inundada y el escape de los gatos
+usando POO, instanciacion, iterables y algunas librerias adicionales. Se
+ignora la condicion "solo puede haber un gato por escalon" para
+simplificar un poco los condicionales, pero dado el codigo usado, esta
+debería cumplirse de todas formas para la configuracion básica de la
+simulacion.<br />
+No está testeado para las configs isRandomized=True, isFair=True.<br />
+Se hace entrega del modulo listo para ejecutar desde el depurador.</p>
+<p>Notas Adicionales:</p>
+<ul>
+<li>Se usa la convencion camelCase para nombrar las variables y
+funciones.</li>
+<li>Se usa la convencion PascalCase para nombrar objetos.</li>
+<li>Se usa declaracion de variables por compresion cuando se considera
+conveniente.</li>
+<li>El codigo tiene una mezcla de ingles y español, ya que aprendí a
+usar Python de forma autodidacta. (Youtube, StackExchange, PythonDocs y
+mucho Google)</li>
+<li>Las líneas marcadas con "#Sanity Check" cumplen la funcion de
+prevenir errores fortuitos.</li>
+<li>Todas las funciones y objetos tienen comentarios con sus respectivas
+descripciones.</li>
+<li>Algunas líneas tienen comentarios con informacion adicional
+relevante.</li>
+</ul>
+<p>Dependencias:</p>
+<ul>
+<li>time</li>
+<li>random</li>
+<li>sys</li>
+</ul>
+<h1 id="funciones">Funciones</h1>
+<ul>
+<li><p><code>getValidInput</code>(<em>prompt, dtype='str', gate=0</em>)
+:<br />
+Obtiene un input valido dependiendo del tipo de dato y el valor del
+mismo.</p>
+<ul>
+<li><h3 id="uso">Uso:</h3>
+<p><code>user_var = getValidInput(user_prompt, dtype=user_dtype, gate=user_gate)</code></p></li>
+<li><h3 id="args">Args:</h3>
+<ul>
+<li>prompt (<em>str</em>): Texto que se mostrara en la consola para
+pedir un input</li>
+<li>dtype (<em>str</em>, optional): Tipo de dato deseado. Por defecto es
+<strong>'str'</strong>.</li>
+<li>gate (<em>int</em>, optional): Define un umbral inferior para los
+valores numericos.</li>
+</ul></li>
+<li><h3 id="raises">Raises:</h3>
+<ul>
+<li>ValueError: Valor inesperado</li>
+<li>TypeError: Tipo de dato inesperado</li>
+</ul></li>
+</ul>
+<p>Returns:<br />
+<strong>dtype</strong>: Devuelve el input del usuario en el tipo de dato
+deseado y con las restricciones de valor deseadas</p></li>
+<li><p><code>main()</code> :<br />
+Funcion de ejecucion primaria. Al llamarla se ejecuta el
+modulo.</p></li>
+</ul>
+<h1 id="objetos">Objetos</h1>
+<ul>
+<li><p><code>Cat</code>(<em>name, pos, status='active'</em>) :</p>
+<p>Objeto que representa a un gato.</p>
+<ul>
+<li><p>Uso:
+<code>var = Cat(user_name, user_pos, status='user_status')</code><br />
+Inicializa una instancia del objeto Cat.</p></li>
+<li><h2 id="args-1">Args:</h2>
+<ul>
+<li>name (<em>string</em>): Nombre del gato.</li>
+<li>pos (<em>int</em>): Posicion en la escalera del gato.</li>
+<li>status (<em>str</em>, optional): Estado del gato. Puede ser
+('active', 'sunk', 'safe'). Por defecto es
+<strong>'active'</strong>.</li>
+</ul></li>
+<li><h2 id="metodos">Metodos:</h2></li>
+<li><p><code>setPosition</code>(<em>self, new</em>):</p>
+<ul>
+<li><strong>Uso:</strong> self.setPosition(new) : Cambia el valor de
+Cat.pos</li>
+<li><strong>Args:</strong> - new (<em>int</em>): Nueva posicion del gato
+en la escalera. Debe ser un entero positivo no nulo.</li>
+</ul></li>
+<li><p><code>setStatus</code>(<em>self, new</em>)</p>
+<ul>
+<li><strong>Uso:</strong> self.setStatus(<em>new</em>) : Cambia el valor
+de Cat.status</li>
+<li><strong>Args:</strong>
+<ul>
+<li>new (<em>string</em>): Nuevo estado del gato. Puede ser ('active',
+'sunk', 'safe')</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<hr />
+<ul>
+<li><p><code>Stair</code>(<em>stepsTotal, waterLevel=0, cats=None</em>)
+:</p>
+<p>Objeto que define la escalera y maneja la ejecucion de la simulacion.
+Solo definir 1 instancia.</p>
+<ul>
+<li><p>Uso: <code>Stair</code>(<em>user_stepsTotal,
+waterLevel=user_waterLevel, cats=user_cats</em>)<br />
+Inicializa una instancia del objeto Stair.</p></li>
+<li><p><strong>Args:</strong></p>
+<ul>
+<li>stepsTotal (<em>int</em>): Cantidad de escalones total.</li>
+<li>waterLevel (<em>int</em>, optional): Posicion Inicial de la marea.
+Por defecto es <strong>0</strong>.</li>
+<li>cats (<em>list(<code>&lt;class&gt; Cat</code>)</em>, optional):
+Lista que contiene instancias del objeto Cat.Por defecto es
+<strong>None</strong>.</li>
+</ul></li>
+<li><p><strong>Metodos:</strong></p>
+<ul>
+<li><p><code>parseCats</code>(<em>self</em>) : Separa y cuenta las
+instancias de Cat en self.cats segun su estado.</p>
+<p><strong>Returns:</strong> - array: [catGroups, counters] - Donde
+"catGroups" es una lista de 3 listas con instancias de Cat separadas por
+estado y "counters" la lista de los largos de estas.</p></li>
+<li><p><code>printStairState</code>(<em>self, catGroups, counts,
+isFinal=False</em>) : Imprime el estado actual de la simulacion.</p>
+<p><strong>Args:</strong><br />
+- catGroups (<em>array-like</em>): Iterable que contiene las instancias
+de todos los gatos en la simulacion.<br />
+- counts (<em>array-like</em>): Iterable que contiene la cantidad de
+elementos de cada entrada de catGroups.<br />
+- isFinal (<em>bool</em>, optional): Determina si se debe imprimir la
+pantalla final. Por defecto es <strong>False</strong>.</p></li>
+<li><p><code>update</code>(<em>self, moveCats=1, moveWater=1, dt=10,
+isFair=True, isRandomized=False</em>) : Actualiza la simulacion.</p>
+<p><strong>Args:</strong><br />
+- moveCats (<em>int</em>, optional): Cantidad de escalones que recorren
+los gatos. Por defecto es <strong>1</strong>.<br />
+- moveWater (<em>int</em>, optional): Cantidad de escalones que recorre
+la marea. Por defecto es <strong>1</strong>.<br />
+- dt (<em>int</em>, optional): Intervalo de tiempo elapsado. Por defecto
+es <strong>10</strong>.<br />
+- isFair (<em>bool</em>, optional): Condicional de movimiento justo. Por
+defecto es <strong>True</strong>.<br />
+- isRandomized (<em>bool</em>, optional): Condicional de movimiento
+aleatorio. Por defecto es <strong>False</strong>.</p>
+<p>Returns:<br />
+- bool: Determina si la simulacion continua. Para
+<strong>False</strong>, se detiene la simulacion</p></li>
+</ul></li>
+</ul></li>
+</ul>
