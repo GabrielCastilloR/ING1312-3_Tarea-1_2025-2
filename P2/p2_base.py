@@ -8,7 +8,7 @@ __docformat__ = "google" #Da formato de los docstrings a pdoc3
     Curso:			ING1312
     Seccion:		3
     Descripcion:    Solución base P2 de tarea 1.
-    """
+"""
 
 s0 = 'GATO 1'
 s1 = 'GATO 2'
@@ -65,4 +65,5 @@ for i in range(3):
 	print('Escalón 5: ', s4)
 	print('Escalón 6: ', s5)
 		#Fin código añadido por Gabriel Andrés Castillo Rosales
+
 	time.sleep(10)
